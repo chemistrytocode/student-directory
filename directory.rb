@@ -8,7 +8,7 @@ def input_students
   # while the name is not empty, repeat this code
   while !name.empty? do
     # add the student has to the array
-    students << {name: name, cohort: :november}
+    students << {name: name, cohort: :november, hobbies: :football, height: :height, country: :country}
     puts "Now we have #{students.count} students"
     # get another name from the suer
     name = gets.chomp
@@ -23,12 +23,13 @@ def print_header
 end
 
 def print(students)
-  count = 0
-    while count < students.length
-      pupil = students[count]
-      puts "#{pupil[:name]} (#{pupil[:cohort]} cohort)"
-      count += 1
-    end
+  students.each_with_index do |student, index|
+    puts "#{index+1}. #{student[:name]}".center(50)
+    puts "Cohort:#{student[:cohort]}".center(50)
+    puts "Height: #{:height}".center(50)
+    puts "Country: #{:country}".center(50)
+    puts "Hobbies: #{:hobbies}\n".center(50)
+  end
 end
 
 def print_footer(names)
