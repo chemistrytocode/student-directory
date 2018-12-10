@@ -23,13 +23,12 @@ def print_header
 end
 
 def print(students)
-  puts "Input a letter"
-  input = gets.chomp
-  students.each do |student|
-      if student[:name].chars.first == input.upcase
-        puts "#{student[:name]} (#{student[:cohort]} cohort)"
+  count = 0
+    while count < students.length
+      pupil = students[count]
+      puts "#{pupil[:name]} (#{pupil[:cohort]} cohort)"
+      count += 1
     end
-  end
 end
 
 def print_footer(names)
