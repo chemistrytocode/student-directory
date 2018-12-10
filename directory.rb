@@ -17,7 +17,12 @@ def input_students
     end
     # add information to students array
     students << {name: nameandco[:name], cohort: nameandco[:cohort], hobbies: :football, height: :height, country: :country}
-    puts "Now we have #{students.count} students"
+    # check for plurals
+    if students.count == 1
+      puts "Now we have #{students.count} student"
+    else
+      puts "Now we have #{students.count} students"
+    end
     # get another name from the suer
     puts "Please enter another name"
     name = gets.chomp
@@ -43,11 +48,15 @@ def print(students)
 end
 
 def print_footer(names)
-  puts "Overall, we have #{names.count} great students"
+  if names.count == 1
+    puts "Overall, we have #{names.count} great student"
+  else
+    puts "Overall, we have #{names.count} great students"
+  end
 end
 
 def student_cohorts(students)
-  puts "Enter a Cohort Date"
+  puts "Enter a Cohort Date to search"
   input = gets.chomp
   students.each do |student, index|
     if student[:cohort] == input
@@ -55,6 +64,7 @@ def student_cohorts(students)
     end
   end
 end
+
 
 #nothing happens until we call the methods
 students = input_students
