@@ -1,3 +1,25 @@
+def interactive_menu
+  students = []
+  loop do
+    puts "1. Input the Students"
+    puts "2. Show the Students"
+    puts "9. Exit"
+    selection = gets.chomp
+    case selection
+      when "1"
+        students = input_students
+      when "2"
+        print_header
+        print(students)
+        print_footer(students)
+      when "9"
+        exit # this will cause the program to terminate
+      else
+      puts "I don't know what you meant, try again"
+    end
+  end
+end
+
 def input_students
   # create an empty array
   students = []
@@ -16,7 +38,7 @@ def input_students
       nameandco[:cohort] = "November"
     end
     # add information to students array
-    students << {name: nameandco[:name], cohort: nameandco[:cohort], hobbies: :football, height: :height, country: :country}
+    students << {name: nameandco[:name], cohort: nameandco[:cohort]}
     # check for plurals
     if students.count == 1
       puts "Now we have #{students.count} student"
@@ -41,9 +63,6 @@ def print(students)
   students.each_with_index do |student, index|
     puts "#{index+1}. #{student[:name]}".center(50)
     puts "Cohort: #{student[:cohort]}".center(50)
-    puts "Height: #{:height}".center(50)
-    puts "Country: #{:country}".center(50)
-    puts "Hobbies: #{:hobbies}\n".center(50)
   end
 end
 
@@ -67,8 +86,4 @@ end
 
 
 #nothing happens until we call the methods
-students = input_students
-print_header
-print(students)
-print_footer(students)
-student_cohorts(students)
+interactive_menu
