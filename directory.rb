@@ -24,7 +24,7 @@ def process(selection)
   when "3"
     save_students
   when "4"
-    load_students
+    load_prompt
   when "9"
     exit # this will cause the program to terminate
   else
@@ -32,19 +32,20 @@ def process(selection)
   end
 end
 
-def input_students
+def input_prompt
   puts "Please enter the names of the students"
   puts "To finish, just hit return twice"
-  # get the first name
   name = gets.chomp
-  # while the name is not empty, repeat this code
+end
+
+def input_students
+  name = input_prompt
   while !name.empty? do
-    # add the student hash to the array
     add_to_hash(name, :november)
-    puts "Now we have #{@students.count} students"
-    # get another name from the user
-    name = STDIN.gets.chomp
+      puts "Now we have #{@students.count} students"
+      name = input_prompt
   end
+  puts "#{@students.count} have been added"
 end
 
 def add_to_hash(name, cohort)
@@ -67,27 +68,48 @@ def save_students
     file.puts csv_line
   end
   file.close
+  puts "File Save Successful! \n"
 end
 
-def load_students(filename = "students.csv")
+# LOADING METHODS START
+# Prompts the user for an input, defaults to students.csv"
+def load_prompt
+  puts "Enter file to load, leave empty to load default"
+  filename = gets.chomp
+  if filename == ""
+    filename = "students.csv"
+  end
+  check_load_file(filename)
+end
+
+# Checks if argument file is valid
+def check_load_file(filename)
+    if File.exists?(filename) # if it exists
+      load_students(filename)
+    else # if it doesn't exist
+      puts "Sorry, #{filename} doesn't exist."
+      exit # quit the program
+    end
+end
+
+# Loads students
+def load_students(filename)
   file = File.open(filename, "r")
   file.readlines.each do |line|
   name, cohort = line.chomp.split(',')
   add_to_hash(name, cohort.to_sym)
   end
   file.close
+  puts "Loaded #{@students.count} from #{filename}"
 end
 
-def try_load_students
+# Load from command line
+def initial_load_students
   filename = ARGV.first# first argument from the command line
   if filename.nil? # get out of the method if it isn't given
-    load_students
-  elsif File.exists?(filename) # if it exists
-    load_students
-     puts "Loaded #{@students.count} from #{filename}"
-  else # if it doesn't exist
-    puts "Sorry, #{filename} doesn't exist."
-    exit # quit the program
+    puts "No data loaded, create a new list or load from menu"
+  else
+    check_load_file(filename)
   end
 end
 
@@ -106,5 +128,5 @@ def print_footer
   puts "Overall, we have #{@students.count} great students"
 end
 
-try_load_students
+initial_load_students
 interactive_menu
