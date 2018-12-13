@@ -60,15 +60,14 @@ end
 
 def save_students
   # open the file for writing
-  file = File.open("students.csv", "w")
-  # iterate over the array of students
-  @students.each do |student|
-    student_data = [student[:name], student[:cohort]]
-    csv_line = student_data.join(",")
-    file.puts csv_line
-  end
-  file.close
-  puts "File Save Successful! \n"
+  File.open("students.csv", "w") do
+    # iterate over the array of students
+    @students.each do |student|
+      student_data = [student[:name], student[:cohort]]
+      csv_line = student_data.join(",")
+      file.puts csv_line
+      end
+    end
 end
 
 # LOADING METHODS START
@@ -88,7 +87,7 @@ def check_load_file(filename)
       load_students(filename)
     else # if it doesn't exist
       puts "Sorry, #{filename} doesn't exist."
-      exit # quit the program
+      interactive_menu
     end
 end
 
